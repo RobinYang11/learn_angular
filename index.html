@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+	<head>
+		<meta  charset="utf-8">
+		<title></title>
+		
+	</head>
+	<body data-ng-app="myApp" ng-controller="ctrl1">
+		<h1>AngularJS Home Page (Ui-router Demonstration)</h1>
+		<h2>{{name}}</h2>
+		<h2>{{age}}</h2>
+		<h2>{{addr}}</h2>
+		<div  data-ui-view=""></div>
+		<script src="http://cdn.static.runoob.com/libs/angular.js/1.4.6/angular.min.js"></script>
+		<script src="https://cdn.bootcss.com/angular-ui-router/1.0.0-rc.1/angular-ui-router.js"></script>
+		<script>
+			var myApp = angular.module("myApp", ['ui.router']);
+			
+			myApp.config(function ($stateProvider, $urlRouterProvider) {
+
+				 $urlRouterProvider.when("", "/PageTab");
+				 $stateProvider
+					.state("PageTab", {
+						url: "/PageTab",
+						templateUrl: "PageTab.html"
+					})
+					.state("PageTab.Page1", {
+						url:"/Page1",
+						templateUrl: "Page1.html"
+					})
+					.state("PageTab.Page2", {
+						url:"/Page2",
+						templateUrl: "Page2.html"
+					})
+					.state("PageTab.Page3", {
+						url:"/Page3",
+						templateUrl: "Page3.html"
+					});
+			});
+			myApp.controller('ctrl1',function($scope,$http){
+				$http({
+					method:"get",
+					url:"a.json"
+				}).success(function(result){
+					$scope.name=result.name;
+					$scope.age=result.age;
+					$scope.addr=result.addr;
+				})
+			})
+		</script>
+	</body>
+</html>
